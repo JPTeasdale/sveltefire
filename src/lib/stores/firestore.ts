@@ -7,7 +7,7 @@ import type {
   Firestore,
 } from "firebase/firestore";
 
-interface DocMeta {
+interface DocState {
   loading: boolean;
   exists: boolean | null;
 }
@@ -15,7 +15,7 @@ interface DocMeta {
 interface DocStore<T> {
   subscribe: (cb: (value: T | null) => void) => void | (() => void);
   stateStore: {
-    subscribe: (cb: (value: DocMeta) => void) => void | (() => void);
+    subscribe: (cb: (value: DocState) => void) => void | (() => void);
   };
   ref: DocumentReference<T> | null;
   id: string;
@@ -69,7 +69,7 @@ export function docStore<T = any>(
       ? (doc(firestore, ref) as DocumentReference<T>)
       : ref;
 
-  const state = writable<DocMeta>({
+  const state = writable<DocState>({
     loading: true,
     exists: null,
   });
