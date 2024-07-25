@@ -68,7 +68,7 @@ Check if post does not exist:
     }
 
     const post = docStore<Post>(firestore, 'posts/id');
-    const postState = post.state;
+    const postState = post.stateStore;
 </script>
 
 {#if !$postState.loading && !$postState.exists}
